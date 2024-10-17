@@ -14,7 +14,7 @@ services:
       - db_network
 
   api:
-    image: karimzomita/devops-igl5
+    image: karimzomita/devops-igl5:latest
     ports:
       - "8082:8082"
     networks:

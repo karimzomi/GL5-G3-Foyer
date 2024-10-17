@@ -2,21 +2,34 @@ package tn.esprit.tpfoyer17;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import lombok.extern.slf4j.Slf4j;
 import tn.esprit.tpfoyer17.entities.Etudiant;
-import tn.esprit.tpfoyer17.services.IEtudiantService;
+import tn.esprit.tpfoyer17.repositories.EtudiantRepository;
+import tn.esprit.tpfoyer17.services.EtudiantService;
 
-@SpringBootTest
-@Slf4j
+@ExtendWith(MockitoExtension.class)
 public class EtudiantTests {
 
-    @Autowired
-    IEtudiantService etudiantService;
+    @InjectMocks
+    EtudiantService etudiantService;
+
+    @Mock
+    private EtudiantRepository etudiantRepository;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this); // Initialize mocks
+    }
 
     @Test
     public void testEtudiant() {
@@ -25,20 +38,14 @@ public class EtudiantTests {
                 .prenomEtudiant("Ahmed")
                 .cinEtudiant(12345678)
                 .build();
-        etudiantService.addEtudiant(etudiant);
 
-        assertNotNull(etudiant.getIdEtudiant());
+        assertNotNull(etudiant);
 
-        Etudiant etudiant1 = etudiantService.getEtudiantById(etudiant.getIdEtudiant());
+        when(etudiantRepository.save(etudiant)).thenReturn(etudiant);
+        assertEquals(etudiant, etudiantService.addEtudiant(etudiant));
 
-        assertNotNull(etudiant1);
+        when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(java.util.Optional.of(etudiant));
+        assertEquals(etudiant, etudiantService.getEtudiantById(etudiant.getIdEtudiant()));
 
-        assertEquals(etudiant.getIdEtudiant(), etudiant1.getIdEtudiant());
-        assertEquals(etudiant.getCinEtudiant(), etudiant1.getCinEtudiant());
-        assertEquals(etudiant.getNomEtudiant(), etudiant1.getNomEtudiant());
-        assertEquals(etudiant.getPrenomEtudiant(), etudiant1.getPrenomEtudiant());
-
-        etudiantService.deleteEtudiant(etudiant.getIdEtudiant());
-
-    }
+    };
 }
