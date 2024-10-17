@@ -19,6 +19,8 @@ services:
       - "8082:8082"
     networks:
       - db_network
+    depends_on:
+      - db
 
 volumes:
   mysql:
