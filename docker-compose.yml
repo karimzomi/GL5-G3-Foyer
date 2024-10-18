@@ -14,7 +14,7 @@ services:
       - db_network
 
   api:
-    image: xqliza/devops-foyer
+    image: xqliza/devops-foyer:$BUILD_NUMBER
     ports:
       - "8082:8082"
     networks:
