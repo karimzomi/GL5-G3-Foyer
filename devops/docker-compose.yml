@@ -6,13 +6,13 @@ services:
       - "2375:2375"
       - "2376:2376"
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - jenkins_home:/var/jenkins_home
       - jenkins-docker-certs:/certs/client
     networks:
       - jenkins
     environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
       - DOCKER_TLS_CERTDIR=/certs
-    restart: always
 
   jenkins:
     build:
@@ -22,55 +22,43 @@ services:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - jenkins
     environment:
       - JENKINS_OPTS="--prefix=/jenkins"
-    restart: always
+    networks:
+      - jenkins
 
   sonarqube:
-    image: sonarqube:latest
+    image: sonarqube:lts-community
     ports:
       - "9000:9000"
+      - "9092:9092"
     volumes:
       - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
     networks:
       - jenkins
-    restart: always
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - jenkins
-    restart: always
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    networks:
-      - jenkins
-    restart: always
 
   nexus:
     image: sonatype/nexus3:latest
-    volumes:
-      - nexus-data:/nexus-data
     ports:
       - "8081:8081"
+    volumes:
+      - nexus_data:/nexus-data
     networks:
       - jenkins
-    restart: always
 
 volumes:
   jenkins_home:
   jenkins-docker-certs:
-  nexus-data:
   sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_temp:
+  nexus_data:
 
 networks:
   jenkins:
