@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class BlocTests {
+class BlocTests {
 
     @InjectMocks
     BlocService blocService;
@@ -29,7 +29,7 @@ public class BlocTests {
     private Bloc bloc;
 
     @BeforeEach
-    void setUp() {
+     void setUp() {
         MockitoAnnotations.openMocks(this);
         bloc = Bloc.builder()
                 .nomBloc("Bloc A")
@@ -38,7 +38,7 @@ public class BlocTests {
     }
 
     @Test
-    public void testCreateBloc() {
+    void testCreateBloc() {
         when(blocRepository.save(bloc)).thenReturn(bloc);
         Bloc createdBloc = blocService.addBloc(bloc);
         assertNotNull(createdBloc);
@@ -46,7 +46,7 @@ public class BlocTests {
     }
 
     @Test
-    public void testReadBloc() {
+    void testReadBloc() {
         when(blocRepository.findById(bloc.getIdBloc())).thenReturn(Optional.of(bloc));
         Bloc foundBloc = blocService.getBlocById(bloc.getIdBloc());
         assertNotNull(foundBloc);
@@ -54,7 +54,7 @@ public class BlocTests {
     }
 
     @Test
-    public void testUpdateBloc() {
+    void testUpdateBloc() {
         bloc.setCapaciteBloc(120);
         when(blocRepository.save(bloc)).thenReturn(bloc);
         Bloc updatedBloc = blocService.updateBloc(bloc);

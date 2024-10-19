@@ -11,6 +11,7 @@ import tn.esprit.tpfoyer17.repositories.BlocRepository;
 import tn.esprit.tpfoyer17.repositories.ChambreRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,7 +34,8 @@ public class BlocService implements IBlocService{
     }
     @Override
     public Bloc getBlocById(long idBloc) {
-        return blocRepository.findById(idBloc).get();
+        Optional<Bloc> bloc = blocRepository.findById(idBloc);
+        return bloc.orElse(null);
     }
     @Override
     public void deleteBloc(long idBloc) {
@@ -46,7 +48,10 @@ public class BlocService implements IBlocService{
 
     @Override
     public Bloc affecterChambresABloc(List<Long> numChambre, long idBloc) {
-        Bloc bloc = blocRepository.findById(idBloc).get();
+        Bloc bloc = blocRepository.findById(idBloc).orElse(null);
+        if(bloc == null){
+            return null;
+        }
         List<Chambre> chambres = (List<Chambre>) chambreRepository.findAllById(numChambre);
         for (Chambre chambre: chambres) {
             chambre.setBloc(bloc);
