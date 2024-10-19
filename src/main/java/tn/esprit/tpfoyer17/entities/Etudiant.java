@@ -1,14 +1,22 @@
 package tn.esprit.tpfoyer17.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Getter
