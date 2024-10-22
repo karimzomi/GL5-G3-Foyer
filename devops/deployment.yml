@@ -28,11 +28,5 @@ spec:
       containers:
       - name: tpfoyer
         image: karimzomita/devops-igl5:latest
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 8082
-
-
