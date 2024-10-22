@@ -11,6 +11,7 @@ spec:
       labels:
         app: tpfoyer
     spec:
+      replicas: 0
       containers:
       - name: db
         image: mysql:8.0.39-debian
