@@ -35,7 +35,4 @@ spec:
             port: 8080
           initialDelaySeconds: 10
           periodSeconds: 5
-      initContainers:
-      - name: init-wait-for-db
-        image: busybox
-        command: ['sh', '-c', 'until nc -z localhost 3306; do echo waiting for db; sleep 2; done;']
+
