@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: tpfoyer
 spec:
-  replicas: 0
   selector:
     matchLabels:
       app: tpfoyer
