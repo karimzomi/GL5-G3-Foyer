@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tpfoyer
+spec:
+  selector:
+    matchLabels:
+      app: tpfoyer
+  template:
+    metadata:
+      labels:
+        app: tpfoyer
+    spec:
+      containers:
+      - name: tpfoyer
+        image: karimzomita/devops-igl5:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8082
+      - name: db
+        image: mysql:8.0.39-debian
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: mydb
+        - name: MYSQL_USER
+          value: user
+        - name: MYSQL_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql
+        emptyDir: {}
+
