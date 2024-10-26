@@ -18,15 +18,11 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           value: root
         - name: MYSQL_DATABASE
-          value: mydb
-        - name: MYSQL_USER
-          value: user
-        - name: MYSQL_PASSWORD
-          value: password
+          value: db
         ports:
         - containerPort: 3306
       - name: tpfoyer
-        image: karimzomita/devops-igl5:latest
+        image: xqliza/devops-foyer:latest
         ports:
         - containerPort: 8082
         readinessProbe:
