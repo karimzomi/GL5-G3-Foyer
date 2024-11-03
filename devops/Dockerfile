@@ -24,6 +24,6 @@ RUN wget https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_am
     mv terraform /usr/local/bin/
 RUN wget https://releases.hashicorp.com/terraform-provider-aws/5.73.0/terraform-provider-aws_5.73.0_linux_amd64.zip -O terraform-provider-aws.zip && \
     unzip -qo terraform-provider-aws.zip && \
-    mv terraform-provider-aws /usr/local/bin/
+    mv terraform-provider-aws_v5.73.0_x5 /usr/local/bin/
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"

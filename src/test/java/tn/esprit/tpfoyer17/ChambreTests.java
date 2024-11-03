@@ -3,7 +3,12 @@ package tn.esprit.tpfoyer17;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +23,8 @@ import tn.esprit.tpfoyer17.entities.enumerations.TypeChambre;
 import tn.esprit.tpfoyer17.repositories.ChambreRepository;
 import tn.esprit.tpfoyer17.services.ChambreService;
 
-import java.util.Optional;
-
 @ExtendWith(MockitoExtension.class)
-class ChambreServiceTests {
+class ChambreTests {
 
     @InjectMocks
     ChambreService chambreService;
