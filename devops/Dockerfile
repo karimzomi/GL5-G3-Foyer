@@ -14,6 +14,10 @@ RUN apt-get install -y curl && \
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     chmod +x kubectl && \
     mv kubectl /usr/local/bin/
+# install helm
+RUN wget https://get.helm.sh/helm-v3.16.1-linux-amd64.tar.gz -O helm.tar.gz && \
+    tar -zxvf helm.tar.gz && \
+    mv linux-amd64/helm /usr/local/bin/helm
 # install aws cli
 RUN  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
