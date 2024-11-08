@@ -61,3 +61,4 @@ resource "aws_security_group_rule" "allow_30001_traffic" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = data.aws_security_group.eks_cluster_sg.id
 }
+
