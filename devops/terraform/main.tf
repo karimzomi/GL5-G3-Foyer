@@ -1,5 +1,6 @@
 provider "aws" {
   region = var.aws_region
+  shared_credentials_file = var.aws_credentials_path
 }
 
 resource "aws_vpc" "my_vpc" {
