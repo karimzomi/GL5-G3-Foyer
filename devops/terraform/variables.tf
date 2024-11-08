@@ -4,12 +4,6 @@ variable "aws_region" {
   default     = "us-east-1" # Région mise à jour
 }
 
-variable "aws_credentials_path" {
-  description = "Chemin du fichier de clés partagées"
-  type        = string
-  default     = "/var/jenkins_home/.aws/credentials"
-}
-
 variable "cluster_name" {
   description = "Nom du cluster EKS"
   type        = string

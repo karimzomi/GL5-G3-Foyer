@@ -1,6 +1,6 @@
 provider "aws" {
   region = var.aws_region
-  shared_credentials_files = var.aws_credentials_path
+  shared_credentials_file = "/var/jenkins_home/.aws/credentials"
 }
 
 resource "aws_vpc" "my_vpc" {
