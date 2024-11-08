@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "cluster_name" {
   description = "Nom du cluster EKS"
   type        = string
-  default     = "igl5-cluster1" # Nom du cluster mis à jour
+  default     = "igl5-cluster" # Nom du cluster mis à jour
 }
 
 variable "subnet_ids" {
