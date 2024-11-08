@@ -91,5 +91,5 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
-  instance_types = ["t3.small"]
+  instance_types = ["t3.medium"]
 }
