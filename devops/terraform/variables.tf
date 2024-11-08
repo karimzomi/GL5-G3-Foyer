@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "cluster_name" {
   description = "Nom du cluster EKS"
   type        = string
-  default     = "k8s-devops-auto" # Nom du cluster mis à jour
+  default     = "Cluster-Auto-Terraform" # Nom du cluster mis à jour
 }
 
 variable "subnet_ids" {
@@ -33,7 +33,3 @@ variable "vpc_cidr" {
   type        = string
   default     = "172.31.0.0/16" # Modifiez-le selon vos besoins
 }
-
-
-
-
