@@ -3,7 +3,10 @@ package tn.esprit.tpfoyer17;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +26,7 @@ import tn.esprit.tpfoyer17.repositories.UniversiteRepository;
 import tn.esprit.tpfoyer17.services.FoyerService;
 
 @ExtendWith(MockitoExtension.class)
-class FoyerServiceTests {
+class FoyerTests {
 
     @InjectMocks
     private FoyerService foyerService;
@@ -40,8 +43,8 @@ class FoyerServiceTests {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         foyer = new Foyer();
-        foyer.setIdFoyer(1L);
-        foyer.setName("Foyer A");
+        foyer.setCapaciteFoyer(1L);
+        foyer.setNomFoyer("Foyer");
     }
 
     @Test
@@ -97,7 +100,7 @@ class FoyerServiceTests {
 
     @Test
     void testUpdateFoyer() {
-        foyer.setName("Updated Foyer");
+        foyer.setNomFoyer("Updated Foyer");
         when(foyerRepository.save(foyer)).thenReturn(foyer);
 
         Foyer updatedFoyer = foyerService.updateFoyer(foyer);
@@ -109,7 +112,7 @@ class FoyerServiceTests {
     @Test
     void testAjouterFoyerEtAffecterAUniversite() {
         Universite universite = new Universite();
-        universite.setIdUniversite(1L);
+        universite.setNomUniversite("Universite");
 
         when(foyerRepository.save(foyer)).thenReturn(foyer);
         when(universiteRepository.findById(1L)).thenReturn(Optional.of(universite));
