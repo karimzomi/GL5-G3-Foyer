@@ -18,10 +18,11 @@ import tn.esprit.tpfoyer17.entities.enumerations.TypeChambre;
 import tn.esprit.tpfoyer17.repositories.ChambreRepository;
 import tn.esprit.tpfoyer17.services.ChambreService;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-class ChambreServiceTests {
+class ChambreTests {
 
     @InjectMocks
     ChambreService chambreService;
@@ -30,6 +31,7 @@ class ChambreServiceTests {
     ChambreRepository chambreRepository;
 
     Chambre chambre;
+    List<Chambre> chambreList;
 
     @BeforeEach
     void setUp() {
@@ -39,6 +41,8 @@ class ChambreServiceTests {
                 .numeroChambre(101)
                 .typeChambre(TypeChambre.SIMPLE)
                 .build();
+
+        chambreList = List.of(chambre);
     }
 
     @Test
@@ -60,7 +64,6 @@ class ChambreServiceTests {
         assertEquals(chambre, foundChambre);
         verify(chambreRepository, times(1)).findById(1L);
 
-        // Test when chambre is not found
         when(chambreRepository.findById(2L)).thenReturn(Optional.empty());
         Chambre notFoundChambre = chambreService.getChambreById(2L);
 
@@ -70,8 +73,8 @@ class ChambreServiceTests {
 
     @Test
     void testGetAllChambres() {
-        when(chambreRepository.findAll()).thenReturn(java.util.List.of(chambre));
-        var chambres = chambreService.getAllChambres();
+        when(chambreRepository.findAll()).thenReturn(chambreList);
+        List<Chambre> chambres = chambreService.getAllChambres();
 
         assertNotNull(chambres);
         assertEquals(1, chambres.size());
@@ -95,5 +98,65 @@ class ChambreServiceTests {
         chambreService.deleteChambre(1L);
 
         verify(chambreRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testGetChambresParNomUniversite() {
+        String nomUniversite = "ESPRIT";
+        when(chambreRepository.findByBlocFoyerUniversiteNomUniversite(nomUniversite)).thenReturn(chambreList);
+        List<Chambre> result = chambreService.getChambresParNomUniversite(nomUniversite);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(chambre, result.get(0));
+        verify(chambreRepository, times(1)).findByBlocFoyerUniversiteNomUniversite(nomUniversite);
+    }
+
+    @Test
+    void testGetChambresParBlocEtTypeKeyWord() {
+        long idBloc = 1L;
+        TypeChambre typeChambre = TypeChambre.SIMPLE;
+        when(chambreRepository.findByBlocIdBlocAndTypeChambre(idBloc, typeChambre)).thenReturn(chambreList);
+        List<Chambre> result = chambreService.getChambresParBlocEtTypeKeyWord(idBloc, typeChambre);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(chambre, result.get(0));
+        verify(chambreRepository, times(1)).findByBlocIdBlocAndTypeChambre(idBloc, typeChambre);
+    }
+
+    @Test
+    void testGetChambresParBlocEtTypeJPQL() {
+        long idBloc = 1L;
+        TypeChambre typeChambre = TypeChambre.SIMPLE;
+        when(chambreRepository.findByBlocIdBlocAndTypeChambreJPQL(idBloc, typeChambre)).thenReturn(chambreList);
+        List<Chambre> result = chambreService.getChambresParBlocEtTypeJPQL(idBloc, typeChambre);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(chambre, result.get(0));
+        verify(chambreRepository, times(1)).findByBlocIdBlocAndTypeChambreJPQL(idBloc, typeChambre);
+    }
+
+    @Test
+    void testGetChambresNonReserveParNomUniversiteEtTypeChambre() {
+        String nomUniversite = "ESPRIT";
+        TypeChambre typeChambre = TypeChambre.SIMPLE;
+        when(chambreRepository.getChambresNonReserveParNomUniversiteEtTypeChambre(nomUniversite, typeChambre)).thenReturn(chambreList);
+        List<Chambre> result = chambreService.getChambresNonReserveParNomUniversiteEtTypeChambre(nomUniversite, typeChambre);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(chambre, result.get(0));
+        verify(chambreRepository, times(1)).getChambresNonReserveParNomUniversiteEtTypeChambre(nomUniversite, typeChambre);
+    }
+
+    @Test
+    void testGetChambreNonReserverScheduled() {
+        when(chambreRepository.getChambresNonReserve()).thenReturn(chambreList);
+
+        chambreService.getChambreNonReserver();
+
+        verify(chambreRepository, times(1)).getChambresNonReserve();
     }
 }

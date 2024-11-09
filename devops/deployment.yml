@@ -12,13 +12,6 @@ spec:
         app: tpfoyer
     spec:
       containers:
-      - name: db
-        image: mysql:8.0.39-debian
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
-        ports:
-        - containerPort: 3306
       - name: tpfoyer
         image: xqliza/devops-foyer:latest
         ports:
